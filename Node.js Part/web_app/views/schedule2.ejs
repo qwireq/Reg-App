@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Schedule</title>
+
+    <!-- head -->
+    <meta charset="utf-8">
+    <!-- demo stylesheet -->
+
+    <link type="text/css" rel="stylesheet" href="../demo/helpers/demo.css?v=215" />
+    <link type="text/css" rel="stylesheet" href="../demo/helpers/media/layout.css?v=215" />
+    <link type="text/css" rel="stylesheet" href="../demo/helpers/media/elements.css?v=215" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+
+    <!-- helper libraries -->
+    <script src="../demo/helpers/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+    <!-- daypilot libraries -->
+    <script src="../demo/js/daypilot-all.min.js?v=215" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet" href="../stylesheets/schedule.css" />
+
+
+
+    <link type="text/css" rel="stylesheet" href="../demo/themes/calendar_transparent.css?v=215" />
+    <style type="text/css">
+        .class_name{
+            color:#ededed;
+        }
+
+        .hh{
+            height:150px;
+            
+        }
+
+        #course_list{
+            margin-top: 5%;
+            margin-left:10px;
+        }
+
+        #course_list > h2{
+            font-family: Roboto;
+            font-weight: 300;
+            margin-top: -15px;
+            color:#2a907b;
+        }
+
+        #sectionsIDList{
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sectionsIdList{
+            width:300px;
+            display: block;
+            margin:0px;
+            margin-bottom:10px;
+            padding:0px;
+        }
+
+        .sectionsIdList div{
+            border:1px solid #ededed;
+            padding:10px;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+        .sectionsIdList div:hover{
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+        }
+
+        .add_course_button{
+            height: 30px !important;
+            line-height: 30px !important;
+            font-weight: 100 !important;
+            text-align: center !important;
+            width: 70px;
+            position: absolute;
+            right: 10px;
+            bottom:5px;
+        }
+
+        .remove_course{
+            color: #1fcaa7;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+        }
+
+        .remove_course:hover{
+            color:#1aecc1;
+        }
+
+        .c_title{
+            color:#2a907b;
+
+        }
+    </style>
+
+    <!-- /head -->
+
+</head>
+<body>
+
+<!-- top -->
+
+    
+
+    <div id="container-fluid" >
+
+        <div class="row">
+            <div class="hh col-md-12">
+                <input type="submit" value="Go to Userpage" onclick="location.href = '/userpage';"/></div>
+        </div>
+
+        <div class="row">
+            <div id="course_side" class="col-md-3">
+
+                <div id="course_list" class="tab" >
+
+                    <h2> Course List: </h2>
+                    <ul id="sectionsIDList">
+                        <%-secs%>
+
+                    </ul>
+                </div>
+                <input type="submit" value="Save Schedule" onclick="sendData()"/>
+            </div>
+            
+                <!-- /top -->
+
+                <div class="calendar_wrap col-md-9">
+                    <div id="dp"></div>
+                </div>
+
+                <div id="print"></div>
+
+                <script type="text/javascript">
+
+                        $('.remove_course').click(function(){
+                            $(this).parent().parent().remove();
+                        });
+
+                        var xList = [];
+                        var termList = [];
+                        var yearList = [];
+                        function hello(x){
+                            
+                            xList.push(x);
+                            var course = $('#sec_' + x + ' div');
+                            termList.push(course.attr("section_term"));
+                            yearList.push(course.attr("section_year"));
+                            var title = course.children('.c_title').text();
+                            var start = course.children('.time').children('.start_time').text();
+                            var end = course.children('.time').children('.end_time').text();
+                            var days = course.children('.days').children('.daysWeek').text();
+
+                            var i;
+
+                            for(i=0; i<days.length; i++){
+                                var e = new DayPilot.Event({
+                                    start: new DayPilot.Date("2013-03-25T" + start),
+                                    end: new DayPilot.Date("2013-03-25T" + end),
+                                    resource: days[i],
+                                    id: DayPilot.guid(),
+                                    text: title
+                                });
+                                dp.events.add(e);
+                            }
+                            $('#sec_' + x).remove();
+                            console.log(days);
+                        }
+
+                        function sendData(){
+                            var sections = new Set();
+                            var sec = [];
+                            for(var i=0; i<dp.events.list.length; i++){
+                                if(sections.has(dp.events.list[i].text) == false){
+                                    sections.add(dp.events.list[i].text);
+                                    sec.push(dp.events.list[i].text);
+                                }
+                            }
+
+                            console.log(sections);
+
+
+                            console.log(sec);
+                            $.post("/schedule2/save", {sections: sec, sectionIDList: xList, years: yearList, terms: termList}, function(result){
+                                console.log(result);
+
+                            });
+                            alert("Schedule is saved");
+                        }
+                    
+
+                    var dp = new DayPilot.Calendar("dp");
+
+
+                    // behavior and appearance
+                    dp.width = "98%";
+                    dp.heightSpec = "BusinessHoursNoScroll";
+                    dp.businessEndsHour = 20;
+                    dp.cellHeight = 32;
+                    dp.timeRangeSelectedHandling = "Disabled";
+                    dp.eventMoveHandling = "Disabled";
+                    dp.eventResizeHandling = "Disabled";
+                    dp.eventHoverHandling = "Disabled";
+                    dp.durationBarVisible = false;
+                    dp.eventSelectColor = "red";
+                    dp.columnMarginRight = 0;
+                    dp.columnWidth = 100;
+                    dp.cellBackColor = "#2a907b";
+                    dp.cellBackColorNonBusiness = "#2a907b";
+                    dp.eventFontColor = "#2a907b";
+                    dp.cssClassPrefix = "schedule";
+                    dp.update();
+                    console.log(dp);
+
+                    // view
+                    //dp.startDate = "2013-03-25";  // or just dp.startDate = "2013-03-25";
+                    dp.viewType = "Resources";
+                    dp.columns = [
+                        { name: "Monday", id: "M", start: "2013-03-25" },
+                        { name: "Tuesday", id: "T", start: "2013-03-25" },
+                        { name: "Wednesday", id: "W", start: "2013-03-25" },
+                        { name: "Thursday", id: "R", start: "2013-03-25" },
+                        { name: "Friday", id: "F", start: "2013-03-25" },
+                        { name: "Saturday", id: "S", start: "2013-03-25" },
+                    ];
+                    /*dp.events.list = [
+                        {
+                            start: "2013-03-25T12:00:00",
+                            end: "2013-03-25T14:00:00",
+                            id: "1",
+                            text: '<h3 class="class_name">Class 1</h3>',
+                            resource: "M"
+                        }
+                    ];*/
+                    //dp.update();
+
+
+
+                    // event creating
+
+
+                    dp.onEventClick = function(args) {
+                        //alert("clicked: " + args.e.id());
+                    };
+
+                    dp.init();
+                    /*
+                    var e = new DayPilot.Event({
+                        start: new DayPilot.Date("2013-03-25T12:00:00"),
+                        end: new DayPilot.Date("2013-03-25T12:00:00").addHours(3),
+                        id: DayPilot.guid(),
+                        text: "Special event"
+                    });
+                    dp.events.add(e);
+                    */
+
+                </script>
+
+                <!-- bottom -->
+            </div>
+        </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            var url = window.location.href;
+            var filename = url.substring(url.lastIndexOf('/')+1);
+            if (filename === "") filename = "index.html";
+            $(".menu a[href='" + filename + "']").addClass("selected");
+        });
+
+    </script>
+    <!-- /bottom -->
+
+</body>
+</html>
+

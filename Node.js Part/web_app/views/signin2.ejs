@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+
+    <title>Registration 2 step</title>
+
+    
+    <%- include styleHeader.ejs %>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="../javascripts/html5shiv.js"></script>
+    <script src="../javascripts/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!-- Fixed navbar -->
+<%- include header.ejs %>
+<!-- /.navbar -->
+
+<header id="head" class="secondary"></header>
+
+<!-- container -->
+<div class="container">
+
+
+    <div class="row">
+
+        <!-- Article main content -->
+        <article class="col-xs-12 maincontent">
+            <header class="page-header">
+                <h1 class="page-title">Some additional info</h1>
+            </header>
+
+            <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3 class="thin text-center">Account information:</h3>
+                         <hr>
+
+                        <form action="/signin2" method="post">
+                            <p style="display:inline-block; color:red;"><%= disp%></p>
+
+
+                            <div class="row top-margin">
+                                <div class="col-sm-6">
+                                    <label>Year<span class="text-danger">*</span></label><br>
+                                    <select name="year" style="height:30px; width:200px;">
+                                    	<option value="1">1</option>
+                                    	<option value="2">2</option>
+                                    	<option value="3">3</option>
+                                    	<option value="4">4</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Department</label>
+                                    <select name="dep" style="height:30px; width:200px;">
+                                    	<option value="SST">SST</option>
+                                    	<option value="SHSS">SHSS</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row top-margin">
+                                <div class="col-sm-6">
+                                    <label>Major</label>
+                                     <input type="text" class="form-control" name="major">
+                                    
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Minor </label>
+                                    <input type="text" class="form-control" name="minor">
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row">
+
+                                <div class="col-lg-8 text-right">
+                                    <button class="btn btn-action" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </article>
+        <!-- /Article -->
+        
+
+    </div>
+</div>	<!-- /container -->
+
+
+
+
+
+
+
+<!-- JavaScript libs are placed at the end of the document so the pages load faster -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="../javascripts/headroom.min.js"></script>
+<script src="../javascripts/jQuery.headroom.min.js"></script>
+<script src="../javascripts/template.js"></script>
+
+
+</body>
+</html>

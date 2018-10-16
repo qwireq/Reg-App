@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>User Schedule</title>
+
+        <!-- head -->
+        <meta charset="utf-8"> 
+        <!-- demo stylesheet -->
+    	<link type="text/css" rel="stylesheet" href="../public/demo/helpers/demo.css?v=215" />
+        <link type="text/css" rel="stylesheet" href="../public/demo/helpers/media/layout.css?v=215" />
+        <link type="text/css" rel="stylesheet" href="../public/demo/helpers/media/elements.css?v=215" />
+
+	<!-- helper libraries -->
+	<script src="../public/demo/helpers/jquery-1.9.1.min.js" type="text/javascript"></script>
+    
+	<!-- daypilot libraries -->
+        <script src="../public/demo/js/daypilot-all.min.js?v=215" type="text/javascript"></script>
+
+  
+        
+	<link type="text/css" rel="stylesheet" href="../public/demo/themes/calendar_transparent.css?v=215" />
+    <style type="text/css">
+        .class_name{
+            color:#ededed;
+        }
+    </style> 
+
+	<!-- /head -->
+       
+</head>
+<body>
+
+<!-- top -->
+
+    <div id="main">
+        </div>
+        
+        <div id="container" >
+	        <div id="content">
+	            <div>
+<!-- /top -->
+
+	<div class="math" onclick="hello()">Register Probability</div>
+
+<div id="dp"></div>
+
+<div id="print"></div>
+
+<script type="text/javascript">
+	function hello(){
+		var e = new DayPilot.Event({
+        	start: new DayPilot.Date("2013-03-25T16:30:00"),
+        	end: new DayPilot.Date("2013-03-25T18:00:00"),
+        	resource: "T",
+        	id: DayPilot.guid(),
+        	text: "Probability"
+    	});
+    	dp.events.add(e);
+	}
+    
+    var dp = new DayPilot.Calendar("dp");
+
+
+    // behavior and appearance
+    dp.theme = "calendar_transparent";
+    dp.heightSpec = "BusinessHoursNoScroll";
+    dp.businessEndsHour = 20;
+    dp.cellHeight = 40;
+    dp.timeRangeSelectedHandling = "Disabled";
+    dp.eventMoveHandling = "Disabled";
+    dp.eventResizeHandling = "Disabled";
+    dp.eventHoverHandling = "Disabled";
+    dp.durationBarVisible = false;
+    dp.eventSelectColor = "red";
+    dp.columnMarginRight = 0;
+  	console.log(dp);
+
+    // view
+    //dp.startDate = "2013-03-25";  // or just dp.startDate = "2013-03-25";
+    dp.viewType = "Resources";
+    dp.columns = [
+	  { name: "Monday", id: "M", start: "2013-03-25" },
+	  { name: "Tuesday", id: "T", start: "2013-03-25" },
+	  { name: "Wednesday", id: "W", start: "2013-03-25" },
+	  { name: "Thursday", id: "R", start: "2013-03-25" },
+	  { name: "Friday", id: "F", start: "2013-03-25" },
+	  { name: "Saturday", id: "S", start: "2013-03-25" },
+];
+dp.events.list = [
+{
+  start: "2013-03-25T12:00:00",
+  end: "2013-03-25T14:00:00",
+  id: "1",
+  text: '<h3 class="class_name">Class 1</h3>',
+  resource: "M"
+}
+];
+//dp.update();
+	
+
+
+    // event creating
+    
+    
+    dp.onEventClick = function(args) {
+        alert("clicked: " + args.e.id());
+    };
+    
+    dp.init();
+
+    var e = new DayPilot.Event({
+        start: new DayPilot.Date("2013-03-25T12:00:00"),
+        end: new DayPilot.Date("2013-03-25T12:00:00").addHours(3),
+        id: DayPilot.guid(),
+        text: "Special event"
+    });
+    dp.events.add(e);
+
+</script>
+
+<!-- bottom -->
+                </div>
+	        </div>
+        </div>
+    </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    var url = window.location.href;
+    var filename = url.substring(url.lastIndexOf('/')+1);
+    if (filename === "") filename = "index.html";
+    $(".menu a[href='" + filename + "']").addClass("selected");
+});
+        
+</script>
+<!-- /bottom -->
+
+</body>
+</html>
+

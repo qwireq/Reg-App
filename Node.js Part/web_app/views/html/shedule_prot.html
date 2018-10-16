@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<!--
+	Eventually by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+<head>
+    <title>Section select page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="../public/stylesheets/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <!--[if lte IE 8]>
+    <script src="../schedule1%20template/assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="../public/schedule1%20template/assets/css/main.css" />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="../schedule1%20template/assets/css/ie8.css"/><![endif]-->
+    <!--[if lte IE 9]>
+    <link rel="stylesheet" href="../schedule1%20template/assets/css/ie9.css"/><![endif]-->
+
+    <style type="text/css">
+        body{
+           
+            font-family: Roboto;
+            font-weight: 300;
+        }
+
+        #list_body{
+            padding-right:20px;
+            height:700px;
+            
+        }
+
+        .wrap{
+           height:700px;
+           margin-right:20px;
+           background-color: #f7f7f9;
+           border-radius: 10px;
+        }
+
+        .list_table{
+            background-color: #f7f7f9;
+            color:#202020;
+            border-radius: 10px;
+            padding:10px;
+        }
+    </style>
+</head>
+<body class="container-fluid" style="">
+
+<!-- Header -->
+<div class="row">
+    <header id="header" class="col-md-6">
+        <h1 style="font-weight:100" >Search for section</h1>
+        <p>Just type name of the course or its abbreviation<br />
+            </p>
+    </header>
+</div>
+<div class="row">
+<!-- Signup Form -->
+    <form id="signup-form" method="post" action="/schedule" class="col-md-4">
+        <input type="text" name="sectionTitle"  placeholder="Section Title" />
+        <input type="submit" value="Search" />
+    </form>
+
+    <!-- Classes List -->
+    <div id="list_body" class="col-md-8">
+        <div class="wrap">
+            <table class="table table-hover list_table" >
+              <thead style="font-weight:400; ">
+                <tr style="height:60px;">
+                  <th>#</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Username</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td colspan="2">Larry the Bird</td>
+                  <td>@twitter</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- Footer -->
+<footer id="footer">
+
+</footer>
+
+<!-- Scripts -->
+<!--[if lte IE 8]>
+<script src="../schedule1%20template/assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="../public/schedule1%20template/assets/js/main.js"></script>
+
+</body>
+</html>
